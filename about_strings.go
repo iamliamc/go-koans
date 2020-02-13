@@ -1,20 +1,40 @@
 package go_koans
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func aboutStrings() {
-	assert("a"+__string__ == "abc") // string concatenation need not be difficult
-	assert(len("abc") == __int__)   // and bounds are thoroughly checked
+	assert("a"+"bc" == "abc") // string concatenation need not be difficult
+	assert(len("abc") == 3)   // and bounds are thoroughly checked
 
-	assert("abc"[0] == __byte__) // their contents are reminiscent of C
+	assert("abc"[0] == 97) // their contents are reminiscent of C
+	assert("a"[0] == 97)   // same...
 
-	assert("smith"[2:] == __string__)  // slicing may omit the end point
-	assert("smith"[:4] == __string__)  // or the beginning
-	assert("smith"[2:4] == __string__) // or neither
-	assert("smith"[:] == __string__)   // or both
+	s := string(97) // plain conversion of the value is interpreted as a Unicode code point...
+	assert(s == "a")
 
-	assert("smith" == __string__) // they can be compared directly
-	assert("smith" < __string__)  // i suppose maybe this could be useful.. someday
+	var n int = 97
+	z := strconv.Itoa(n) // s == "97" (decimal)
+	assert(z == "97")
+
+	// can't redeclare variable in same block...
+	// https://yourbasic.org/golang/redeclaring-variables/
+	// var n int64 = 98
+	// t := strconv.FormatInt(n, 10) // s == "97" (decimal)
+	// assert(t == "98")
+	var f int64 = 98
+	t := strconv.FormatInt(f, 10) // s == "97" (decimal)
+	assert(t == "98")
+
+	assert("smith"[2:] == "ith")  // slicing may omit the end point
+	assert("smith"[:4] == "smit") // or the beginning
+	assert("smith"[2:4] == "it")  // or neither
+	assert("smith"[:] == "smith") // or both
+
+	assert("smith" == "smith") // they can be compared directly
+	assert("smith" < "smitha") // i suppose maybe this could be useful.. someday
 
 	bytes := []byte{'a', 'b', 'c'}
 	assert(string(bytes) == __string__) // strings can be created from byte-slices
